@@ -19,9 +19,10 @@ class BaseModel:
             self.updated_at = datetime.now()
             self.created_at = datetime.now()
 
-    def __str__(self):
-        """Return a string representation of the BaseModel instance"""
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+    def __str__(self) -> str:
+        """Return a string representation of the instance."""
+        class_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
 
     def save(self):
         """Update the public instance attribute updated_at with the current datetime"""
