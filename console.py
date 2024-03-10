@@ -100,16 +100,6 @@ class HBNBCommand(cmd.Cmd):
             print(f"Unrecognized action: {action}.\
             Type 'help' for assistance.\n")
 
-    def default(self, line):
-        """Handle unrecognized commands like exexceptions."""
-        parts = line.split('.')
-        if len(parts) == 2:
-            class_name, action = parts
-            self.handle_custom_command(class_name, action)
-        else:
-            print(f"Unrecognized command: {line}.\
-                  Type 'help' for assistance.\n")
-
     def do_create(self, line):
         """Creates a new instance of BaseModel"""
         args = line.split()
@@ -142,6 +132,24 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print(storage.all()[key])
 
+    def do_all(self, line):
+        """ Deletes an instance based on the class name and id.
+        """
+        args = line.split()
+        # objects = storage.all()
+
+        if not args:
+            print([str(obj) for obj in storage.all().values()])
+        elif args[0] not in self.CLASSES:
+            print("** class doesn't exist **")
+        else:
+            class_name = args[0]
+            instances = [
+                str(obj) for key, obj in storage.all().items()
+                if key.startswith(class_name + '.')
+            ]
+            print(instances)
+ 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id."""
         
@@ -160,24 +168,16 @@ class HBNBCommand(cmd.Cmd):
                 del storage.all()[key]
                 storage.save()
 
-    def do_all(self, line):
-        """ Deletes an instance based on the class name and id.
-        """
-        args = line.split()
-        # objects = storage.all()
-
-        if not args:
-            print([str(obj) for obj in storage.all().values()])
-        elif args[0] not in self.CLASSES:
-            print("** class doesn't exist **")
+    def default(self, line):
+        """Handle unrecognized commands like exexceptions."""
+        parts = line.split('.')
+        if len(parts) == 2:
+            class_name, action = parts
+            self.handle_custom_command(class_name, action)
         else:
-            class_name = args[0]
-            instances = [
-                str(obj) for key, obj in storage.all().items()
-                if key.startswith(class_name + '.')
-            ]
-            print(instances)
-
+            print(f"Unrecognized command: {line}.\
+                  Type 'help' for assistance.\n")
+ 
     def do_update(self, line):
         """Updates an instance based on the class name and id by adding
         or updating attribute.
