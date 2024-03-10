@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 """The cmd Module.
-for building line-oriented command interpreters
 """
 import cmd
 from models.base_model import BaseModel
@@ -146,8 +145,8 @@ class HBNBCommand(cmd.Cmd):
                 print(storage.all()[key])
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and id
-        (save the change into the JSON file)."""
+        """Deletes an instance based on the class name and id."""
+        
         args = line.split()
         if not args:
             print("** class name missing **")
@@ -184,7 +183,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Updates an instance based on the class name and id by adding
-        or updating attribute (save the change into the JSON file).
+        or updating attribute .
         """
         args = line.split()
 
@@ -221,14 +220,9 @@ class HBNBCommand(cmd.Cmd):
 
         obj = storage.all()[key]
 
-        # Store the previous updated_at value
-        # prev_updated_at = obj.updated_at
-
         # Simplify attribute handling (without explicit checks)
         setattr(obj, attribute, value)
-
-        # Always update the updated_at attribute
-        # obj.updated_at = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
+        
         storage.all()[key].save()
 
 
