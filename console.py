@@ -53,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
             action_name = parts[0]
             action_args = parts[1][:-1].split(',')
 
-            # Remove surrounding quotes if present
+           
             action_args = [arg.strip('\"') for arg in action_args]
 
             if action_name == 'show':
