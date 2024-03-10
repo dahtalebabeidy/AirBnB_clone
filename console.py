@@ -7,6 +7,7 @@ import cmd
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
+import shlex
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -48,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """Prints the string representation of an instance"""
-        args = arg.split()
+        args = shlex.split(arg)
         if not args:
             print("** class name missing **")
         elif args[0] not in storage.classes:
@@ -64,7 +65,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
-        args = arg.split()
+        args = shlex.split(arg)
         if not args:
             print("** class name missing **")
         elif args[0] not in storage.classes:
@@ -84,13 +85,13 @@ class HBNBCommand(cmd.Cmd):
         if not arg:
             print([str(obj) for obj in storage.all().values()])
         else:
-            args = arg.split()
+            args = shlex.split(arg)
             if args[0] not in storage.classes:
                 print("** class doesn't exist **")
 
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
-        args = arg.split()
+        args = shlex.split(arg)
         if not args:
             print("** class name missing **")
         elif args[0] not in storage.classes:
@@ -143,3 +144,5 @@ class HBNBCommand(cmd.Cmd):
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
 ```
+
+This version uses `shlex.split()` to handle quoted strings correctly and ensure proper parsing of command arguments. Let me know if you encounter any further issues!
