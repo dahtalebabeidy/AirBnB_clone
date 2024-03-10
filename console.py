@@ -33,7 +33,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_EOF(self, line):
-        """Exit the console on EOF (Ctrl+D) command."""
+        """Exit the console on EOF command."""
         print()
         return True
 
@@ -101,7 +101,7 @@ class HBNBCommand(cmd.Cmd):
             Type 'help' for assistance.\n")
 
     def default(self, line):
-        """Handle unrecognized commands."""
+        """Handle unrecognized commands like exexceptions."""
         parts = line.split('.')
         if len(parts) == 2:
             class_name, action = parts
@@ -111,7 +111,7 @@ class HBNBCommand(cmd.Cmd):
                   Type 'help' for assistance.\n")
 
     def do_create(self, line):
-        """Creates a new instance of BaseModel, saves it (to the JSON file)"""
+        """Creates a new instance of BaseModel"""
         args = line.split()
         if not args:
             print("** class name missing **")
@@ -161,8 +161,7 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
 
     def do_all(self, line):
-        """ Deletes an instance based on the class name and id
-        (save the change into the JSON file).
+        """ Deletes an instance based on the class name and id.
         """
         args = line.split()
         # objects = storage.all()
@@ -181,7 +180,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """Updates an instance based on the class name and id by adding
-        or updating attribute .
+        or updating attribute.
         """
         args = line.split()
 
