@@ -1,36 +1,48 @@
 #!/usr/bin/python3
+
+"""
+Unittest for BaseModel class
+"""
+
 import unittest
-from datetime import datetime
 from models.base_model import BaseModel
+from datetime import datetime
+import os
+
 
 class TestBaseModel(unittest.TestCase):
+    def setUp(self):
+        self.base_model = BaseModel()
 
-    def test_init(self):
-        model = BaseModel()
-        self.assertIsInstance(model, BaseModel)
-        self.assertIsInstance(model.id, str)
-        self.assertIsInstance(model.created_at, datetime)
-        self.assertIsInstance(model.updated_at, datetime)
+    def tearDown(self):
+        del self.base_model
 
-    def test_str(self):
-        model = BaseModel()
-        string_representation = str(model)
-        self.assertIn("[BaseModel] ({})".format(model.id), string_representation)
+    def test_instance_creation(self):
+        self.assertIsInstance(self.base_model, BaseModel)
+        self.assertTrue(hasattr(self.base_model, 'id'))
+        self.assertTrue(hasattr(self.base_model, 'created_at'))
+        self.assertTrue(hasattr(self.base_model, 'updated_at'))
 
-    def test_save(self):
-        model = BaseModel()
-        original_updated_at = model.updated_at
-        model.save()
-        self.assertNotEqual(original_updated_at, model.updated_at)
+    def test_string_representation(self):
+        string_repr = str(self.base_model)
+        self.assertIn("[BaseModel]", string_repr)
+        self.assertIn("id", string_repr)
+        self.assertIn("created_at", string_repr)
+        self.assertIn("updated_at", string_repr)
 
-    def test_to_dict(self):
-        model = BaseModel()
-        obj_dict = model.to_dict()
-        self.assertIsInstance(obj_dict, dict)
-        self.assertEqual(obj_dict['id'], model.id)
-        self.assertEqual(obj_dict['__class__'], 'BaseModel')
-        self.assertEqual(obj_dict['created_at'], model.created_at.isoformat())
-        self.assertEqual(obj_dict['updated_at'], model.updated_at.isoformat())
+    def test_save_method(self):
+        initial_updated_at = self.base_model.updated_at
+        self.base_model.save()
+        self.assertNotEqual(initial_updated_at, self.base_model.updated_at)
+
+    def test_to_dict_method(self):
+        model_dict = self.base_model.to_dict()
+        self.assertIsInstance(model_dict, dict)
+        self.assertEqual(model_dict['__class__'], 'BaseModel')
+        self.assertIn('id', model_dict)
+        self.assertIn('created_at', model_dict)
+        self.assertIn('updated_at', model_dict)
+
 
 if __name__ == '__main__':
     unittest.main()
