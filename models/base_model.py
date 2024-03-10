@@ -36,7 +36,7 @@ class BaseModel:
         self.updated_at = datetime.now()
         storage.save()
 
-    def to_dict(self):
+    def to_dict(self)-> dict:
         """Return a dictionary containing all keys/values of __dict__ of the instance"""
         obj_dict = self.__dict__.copy()
         obj_dict['__class__'] = self.__class__.__name__
