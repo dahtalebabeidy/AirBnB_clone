@@ -18,8 +18,6 @@ from datetime import datetime
 class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
-    # TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
-
     CLASSES = {
         'BaseModel': BaseModel,
         'User': User,
