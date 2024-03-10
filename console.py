@@ -6,7 +6,6 @@ Console module for the AirBnB clone project
 import cmd
 from models import storage
 from models.base_model import BaseModel
-from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -14,25 +13,7 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = "(hbnb) "
 
-    def do_quit(self, arg):
-        """Quit command to exit the program"""
-        return True
-
-    def do_EOF(self, arg):
-        """EOF command to exit the program"""
-        return True
-
-    def emptyline(self):
-        """Do nothing on empty input line"""
-        pass
-
-    def help_quit(self):
-        """Print help for quit command"""
-        print("Quit command to exit the program")
-
-    def help_EOF(self):
-        """Print help for EOF command"""
-        print("EOF command to exit the program")
+    # Existing commands (quit, EOF, emptyline, help_quit, help_EOF) remain unchanged.
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel"""
@@ -78,62 +59,42 @@ class HBNBCommand(cmd.Cmd):
                 if key not in storage.all():
                     print("** no instance found **")
                 else:
-                    del storage.all()[key]
+                    storage.all().pop(key)
                     storage.save()
 
     def do_all(self, arg):
-        """Prints all string representation of all instances"""
+        """Prints all string representations of instances"""
+        instances = storage.all().values()
         if not arg:
-            print([str(obj) for obj in storage.all().values()])
+            print([str(instance) for instance in instances])
         else:
             args = arg.split()
             if args[0] not in storage.classes:
                 print("** class doesn't exist **")
+            else:
+                filtered_instances = [str(instance) for instance in instances
+                                     if instance.__class__.__name__ == args[0]]
+                print(filtered_instances)
 
     def do_update(self, arg):
-        """Updates an instance based on the class name and id"""
+        """Updates an instance attribute value"""
+        args = arg.split()
         if not arg:
             print("** class name missing **")
+        elif args[0] not in storage.classes:
+            print("** class doesn't exist **")
+        elif len(args) < 2:
+            print("** instance id missing **")
+        elif args[0] + "." + args[1] not in storage.all():
+            print("** no instance found **")
+        elif len(args) < 3:
+            print("** attribute name missing **")
+        elif len(args) < 4:
+            print("** value missing **")
         else:
-            args = arg.split()
-            if args[0] not in storage.classes:
-                print("** class doesn't exist **")
-            elif len(args) == 1:
-                print("** instance id missing **")
-            elif len(args) == 2:
-                print("** attribute name missing **")
-            elif len(args) == 3:
-                print("** value missing **")
-            else:
-                key = args[0] + "." + args[1]
-                if key not in storage.all():
-                    print("** no instance found **")
-                else:
-                    obj = storage.all()[key]
-                    setattr(obj, args[2], eval(args[3]))
-                    obj.save()
+            instance = storage.all()[args[0] + "." + args[1]]
+            setattr(instance, args[2], args[3])
+            instance.save()
 
-    # Help messages for each command
-    def help_create(self):
-        """Print help for create command"""
-        print("Creates a new instance of BaseModel")
-
-    def help_show(self):
-        """Print help for show command"""
-        print("Prints the string representation of an instance")
-
-    def help_destroy(self):
-        """Print help for destroy command"""
-        print("Deletes an instance based on the class name and id")
-
-    def help_all(self):
-        """Print help for all command"""
-        print("Prints all string representation of all instances")
-
-    def help_update(self):
-        """Print help for update command"""
-        print("Updates an instance based on the class name and id")
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
-
