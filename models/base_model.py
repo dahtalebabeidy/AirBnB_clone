@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 import uuid
 from datetime import datetime
-from models import storage
 
 class BaseModel:
     """BaseModel class that defines common attributes/methods for other classes"""
@@ -23,6 +22,12 @@ class BaseModel:
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
+        """Update the public instance attribute updated_at with the current datetime"""
+        from models import storage  # Import moved here
+        self.updated_at = datetime.now()
+        storage.save()
+
+    def save(self, storage):
         """Update the public instance attribute updated_at with the current datetime"""
         self.updated_at = datetime.now()
         storage.save()

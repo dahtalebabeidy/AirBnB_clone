@@ -18,5 +18,5 @@ print("-- Create a new object --")
 my_model = BaseModel()
 my_model.name = "My_First_Model"
 my_model.my_number = 89
-my_model.save()
+my_model.save(storage)  # Pass storage as an argument
 print(my_model)
