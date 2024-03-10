@@ -35,11 +35,15 @@ class BaseModel:
         """Update the public instance attribute updated_at with the current datetime"""
         self.updated_at = datetime.now()
         storage.save()
+     def to_dict(self) -> dict:
+        """Return a dictionary of instance attributes."""
+        excluded = ['name', 'my_number']
+        result = {k: v for k, v in self.__dict__.items() if k not in excluded}
+        result['__class__'] = self.__class__.__name__
 
-    def to_dict(self)-> dict:
-        """Return a dictionary containing all keys/values of __dict__ of the instance"""
-        obj_dict = self.__dict__.copy()
-        obj_dict['__class__'] = self.__class__.__name__
-        obj_dict['created_at'] = self.created_at.isoformat()
-        obj_dict['updated_at'] = self.updated_at.isoformat()
-        return obj_dict
+        for k, v in result.items():
+            if isinstance(v, datetime):
+                result[k] = v.isoformat()
+
+        return result
+
