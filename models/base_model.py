@@ -5,6 +5,7 @@ from datetime import datetime
 
 class BaseModel:
     """BaseModel class that defines common attributes/methods for other classes"""
+    TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
 
     def __init__(self, *args, **kwargs):
         """Initialize BaseModel instance"""
