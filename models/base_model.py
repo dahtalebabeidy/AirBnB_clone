@@ -10,14 +10,14 @@ class BaseModel:
     """
     TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%f"
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargss):
         """Initialize a new instance of BaseModel.
         Args:
-            - *args: will not be used
-            - **kwargs: a dictionary of key-values arguments
+            - *argss: will not be used
+            - **kwargss: a dictionary of key-values arguments
         """
-        if kwargs:
-            for key, value in kwargs.items():
+        if kwargss:
+            for key, value in kwargss.items():
                 if key != '__class__':
                     if key in ["created_at", "updated_at"]:
                         value = datetime.strptime(value, self.TIME_FORMAT)
