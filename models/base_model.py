@@ -16,7 +16,8 @@ class BaseModel:
                     setattr(self, key, value)
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = self.updated_at = datetime.now()
+            self.updated_at = datetime.now()
+            self.created_at = datetime.now()
 
     def __str__(self):
         """Return a string representation of the BaseModel instance"""
