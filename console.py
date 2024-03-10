@@ -112,5 +112,26 @@ class HBNBCommand(cmd.Cmd):
                     setattr(obj, args[2], eval(args[3]))
                     obj.save()
 
+    # Help messages for each command
+    def help_create(self):
+        """Print help for create command"""
+        print("Creates a new instance of BaseModel")
+
+    def help_show(self):
+        """Print help for show command"""
+        print("Prints the string representation of an instance")
+
+    def help_destroy(self):
+        """Print help for destroy command"""
+        print("Deletes an instance based on the class name and id")
+
+    def help_all(self):
+        """Print help for all command"""
+        print("Prints all string representation of all instances")
+
+    def help_update(self):
+        """Print help for update command"""
+        print("Updates an instance based on the class name and id")
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
