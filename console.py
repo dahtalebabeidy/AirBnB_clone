@@ -38,11 +38,11 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_quit(self, line):
-        """Quit command to exit the program."""
+        """Quit command to quit the program."""
         return True
 
     def help_quit(self):
-        """Help message for the quit command."""
+        """Help message for the quit."""
         print("Quit command to exit the program\n")
 
     def handle_custom_command(self, class_name, action):
@@ -218,7 +218,6 @@ class HBNBCommand(cmd.Cmd):
 
         obj = storage.all()[key]
 
-        # Simplify attribute handling (without explicit checks)
         setattr(obj, attribute, value)
         
         storage.all()[key].save()
